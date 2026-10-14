@@ -317,7 +317,7 @@ async function handleLogin(req, res) {
         // Verificar contraseña con hashing seguro
         const isValid = verifyPassword(password, user.password_hash);
         if (!isValid) {
-            return sendJson(res, 200, { error: 'Credenciales inválidas' });
+            return sendJson(res, 401, { error: 'Credenciales inválidas' });
         }
 
         // Generar token JWT
@@ -350,7 +350,7 @@ async function handlePerfil(req, res) {
     const token = extractBearerToken(req);
 
     if (!token) {
-        return sendJson(res, 200, { error: 'Token de autenticación no proporcionado en la cabecera Authorization' });
+        return sendJson(res, 401, { error: 'Token de autenticación no proporcionado en la cabecera Authorization' });
     }
 
     const verification = verifyToken(token);
