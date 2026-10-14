@@ -1,0 +1,15 @@
+{
+  "name": "login-subagente",
+  "version": "1.0.0",
+  "description": "Sistema de Login completo generado por subagentes y skill de Antigravity",
+  "main": "backend/server.js",
+  "scripts": {
+    "init-db": "node database/init_db.js",
+    "start": "node backend/server.js",
+    "test": "node --test"
+  },
+  "keywords": ["auth", "login", "sqlite", "jwt", "antigravity"],
+  "author": "",
+  "license": "ISC"
+}
+

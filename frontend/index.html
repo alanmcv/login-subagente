@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Acceso Seguro | Autenticación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-gradient-mesh"></div>
+
+  <div class="app-container">
+    <!-- Header / Brand -->
+    <header class="app-header">
+      <div class="brand-badge">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>SecureAuth Pro</span>
+      </div>
+      <h1 class="brand-title">Gestión de Acceso Seguro</h1>
+      <p class="brand-subtitle">Plataforma integrada con servicios de autenticación y protección de sesión</p>
+    </header>
+
+    <!-- Global Notification Banner -->
+    <div id="alertBox" class="alert-box hidden" role="alert" aria-live="polite">
+      <div class="alert-icon-wrapper" id="alertIcon"></div>
+      <div class="alert-content">
+        <p class="alert-title" id="alertTitle"></p>
+        <p class="alert-message" id="alertMessage"></p>
+      </div>
+      <button type="button" class="alert-close-btn" id="closeAlertBtn" aria-label="Cerrar notificación">&times;</button>
+    </div>
+
+    <!-- MAIN CARD CONTAINER -->
+    <main class="auth-card" id="mainCard">
+
+      <!-- VISTA 1: AUTHENTICATION (LOGIN / REGISTRO) -->
+      <section id="authSection" class="view-section active">
+        <!-- Tab Navigation -->
+        <div class="tabs-nav" role="tablist">
+          <button type="button" id="tabLogin" class="tab-btn active" role="tab" aria-selected="true" aria-controls="loginForm">
+            Iniciar Sesión
+          </button>
+          <button type="button" id="tabRegister" class="tab-btn" role="tab" aria-selected="false" aria-controls="registerForm">
+            Crear Cuenta
+          </button>
+        </div>
+
+        <!-- Botón Demo Autofill -->
+        <div class="demo-shortcut-container">
+          <button type="button" id="btnFillDemo" class="btn-demo-shortcut" title="Autollenar con admin@demo.com">
+            <svg class="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.9-6.1l-2.1 2.1m-8 8l-2.1 2.1m12.2 0l-2.1-2.1m-8-8L4.1 5.9"/>
+            </svg>
+            <span>Autollenar con Usuario Demo</span>
+          </button>
+          <span class="demo-hint">admin@demo.com / Password123!</span>
+        </div>
+
+        <!-- FORMULARIO LOGIN -->
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="form-group">
+            <label for="loginEmail" class="form-label">Correo Electrónico</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input 
+                type="email" 
+                id="loginEmail" 
+                name="email" 
+                class="form-input" 
+                placeholder="ejemplo@correo.com" 
+                autocomplete="email" 
+                required
+                aria-describedby="loginEmailError"
+              />
+            </div>
+            <span class="field-error" id="loginEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-link">
+              <label for="loginPassword" class="form-label">Contraseña</label>
+            </div>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input 
+                type="password" 
+                id="loginPassword" 
+                name="password" 
+                class="form-input" 
+                placeholder="Tu contraseña secreta" 
+                autocomplete="current-password" 
+                required
+                aria-describedby="loginPasswordError"
+              />
+              <button type="button" class="btn-toggle-password" id="toggleLoginPassword" aria-label="Mostrar u ocultar contraseña">
+                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="loginPasswordError"></span>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me-label">
+              <input type="checkbox" id="rememberMeCheckbox" checked />
+              <span>Recordar sesión en este equipo</span>
+            </label>
+          </div>
+
+          <button type="submit" id="btnLoginSubmit" class="btn-primary">
+            <span class="btn-text">Iniciar Sesión</span>
+            <div class="btn-loader hidden" aria-hidden="true"></div>
+          </button>
+        </form>
+
+        <!-- FORMULARIO REGISTRO -->
+        <form id="registerForm" class="auth-form hidden" novalidate>
+          <div class="form-group">
+            <label for="regNombre" class="form-label">Nombre Completo</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <input 
+                type="text" 
+                id="regNombre" 
+                name="nombre" 
+                class="form-input" 
+                placeholder="Ej. Juan Pérez" 
+                autocomplete="name" 
+                required
+                aria-describedby="regNombreError"
+              />
+            </div>
+            <span class="field-error" id="regNombreError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail" class="form-label">Correo Electrónico</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input 
+                type="email" 
+                id="regEmail" 
+                name="email" 
+                class="form-input" 
+                placeholder="ejemplo@correo.com" 
+                autocomplete="email" 
+                required
+                aria-describedby="regEmailError"
+              />
+            </div>
+            <span class="field-error" id="regEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword" class="form-label">Contraseña</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input 
+                type="password" 
+                id="regPassword" 
+                name="password" 
+                class="form-input" 
+                placeholder="Mínimo 8 caracteres (letras y números)" 
+                autocomplete="new-password" 
+                required
+                aria-describedby="regPasswordError"
+              />
+              <button type="button" class="btn-toggle-password" id="toggleRegPassword" aria-label="Mostrar u ocultar contraseña">
+                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="regPasswordError"></span>
+          </div>
+
+          <button type="submit" id="btnRegisterSubmit" class="btn-primary">
+            <span class="btn-text">Registrar Cuenta</span>
+            <div class="btn-loader hidden" aria-hidden="true"></div>
+          </button>
+        </form>
+
+        <footer class="card-footer-info">
+          <p>Conexión segura garantizada por tokens JWT cifrados</p>
+        </footer>
+      </section>
+
+    </main>
+
+    <!-- Endpoint Status Indicator Bar -->
+    <aside class="api-status-bar" aria-label="Estado del backend">
+      <div class="api-indicator">
+        <span class="api-dot"></span>
+        <span class="api-text">API Backend: <code id="apiBaseUrl">http://localhost:3000</code></span>
+      </div>
+      <button type="button" id="btnCheckHealth" class="btn-link-action" title="Comprobar conectividad con el backend">
+        Probar conexión
+      </button>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
