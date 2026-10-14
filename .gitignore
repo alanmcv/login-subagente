@@ -1,0 +1,4 @@
+﻿database/auth.db
+.playwright-mcp/
+node_modules/
+.env
